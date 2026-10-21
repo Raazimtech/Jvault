@@ -72,7 +72,7 @@
     try {
       const response = await fetch(FUNCTION_URL + '/bootstrap', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password, setupKey: $('sk').value.trim() })
+        body: JSON.stringify({ username, password })
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || 'Could not create the owner account.');
