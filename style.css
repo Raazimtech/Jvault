@@ -176,3 +176,27 @@ html,body{background:var(--bg);color:var(--ink)}body{font-family:"DM Sans",Inter
 .top-logout:disabled{opacity:.55;cursor:wait}
 .logout-btn:disabled{opacity:.55;cursor:wait}
 @media(max-width:760px){.top-actions{gap:8px}.top-logout{min-height:35px;padding:0 10px;font-size:11px}.user-name{display:none}.avatar{flex-shrink:0}}
+
+
+/* Compact file rows on small screens: keep file actions visible without sideways scrolling. */
+@media(max-width:760px){
+  .file-list{overflow-x:hidden}
+  .thead{display:none}
+  .row{min-width:0;width:100%;grid-template-columns:minmax(0,1fr) auto;gap:8px 10px;padding:12px 10px}
+  .filename{grid-column:1;grid-row:1;min-width:0;gap:9px}
+  .filename .ext{width:31px;height:34px;flex:0 0 31px}
+  .filename strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .catcol{grid-column:1;grid-row:2;padding-left:40px;min-width:0}
+  .catcol select{width:100%;max-width:155px;min-width:0}
+  .datecol{grid-column:2;grid-row:2;align-self:center;text-align:right;font-size:9px;white-space:nowrap}
+  .actions{grid-column:2;grid-row:1;align-self:center;gap:4px}
+  .iconbtn{width:27px;height:27px;flex:0 0 27px}
+}
+@media(max-width:380px){
+  .row{padding:11px 8px;gap:8px}
+  .filename{gap:7px}
+  .filename .ext{width:28px;height:31px;flex-basis:28px}
+  .catcol{padding-left:35px}
+  .actions{gap:3px}
+  .iconbtn{width:25px;height:25px;flex-basis:25px}
+}
