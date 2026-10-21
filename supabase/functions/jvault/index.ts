@@ -5,7 +5,7 @@ const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
-const SOURCE = "https://raw.githubusercontent.com/Raazimtech/jvault/main/";
+const SOURCE = "https://cdn.jsdelivr.net/gh/Raazimtech/jvault@main/";
 const cors = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -22,8 +22,8 @@ async function serveSite(): Promise<Response> {
   if (!response.ok) return new Response("JVault frontend could not be loaded from its repository.", { status: 503 });
   let html = await response.text();
   html = html
-    .replace('href="./style.css"', 'href="https://raw.githubusercontent.com/Raazimtech/jvault/main/style.css"')
-    .replace('src="./app.js"', 'src="https://raw.githubusercontent.com/Raazimtech/jvault/main/app.js"');
+    .replace('href="./style.css"', 'href="https://cdn.jsdelivr.net/gh/Raazimtech/jvault@main/style.css"')
+    .replace('src="./app.js"', 'src="https://cdn.jsdelivr.net/gh/Raazimtech/jvault@main/app.js"');
   return new Response(html, {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
@@ -31,7 +31,7 @@ async function serveSite(): Promise<Response> {
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "strict-origin-when-cross-origin",
       "X-Frame-Options": "DENY",
-      "Content-Security-Policy": "default-src 'self' https://raw.githubusercontent.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://dpiwdhtbhwjgatvcfkcb.supabase.co; script-src 'self' 'unsafe-inline' https://raw.githubusercontent.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://raw.githubusercontent.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://dpiwdhtbhwjgatvcfkcb.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
+      "Content-Security-Policy": "default-src 'self' https://cdn.jsdelivr.net https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://dpiwdhtbhwjgatvcfkcb.supabase.co; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://dpiwdhtbhwjgatvcfkcb.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
     },
   });
 }
