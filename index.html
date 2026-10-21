@@ -28,6 +28,7 @@
         <div class="eyebrow muted-eyebrow">WELCOME TO YOUR VAULT</div>
         <div id="authhead"><h2>Welcome back</h2><p>Sign in to access your private documents.</p></div>
         <form id="setup" class="hidden" autocomplete="off">
+          <label for="sk">One-time setup key</label><input id="sk" name="setupKey" type="password" autocomplete="off" placeholder="Enter your private setup key" required>
           <label for="su">Choose a username</label><input id="su" name="username" minlength="3" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" placeholder="e.g. karim_vault" required>
           <label for="sp">Create a strong password</label><input id="sp" name="password" type="password" minlength="12" autocomplete="new-password" placeholder="At least 12 characters" required>
           <label for="sc">Confirm password</label><input id="sc" name="confirm" type="password" minlength="12" autocomplete="new-password" placeholder="Enter it again" required>
