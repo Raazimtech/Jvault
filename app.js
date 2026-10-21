@@ -68,13 +68,11 @@
     if (!/^[a-z0-9_]{3,24}$/.test(username)) return note('Use 3–24 letters, numbers, or underscores for your username.');
     if (password.length < 12) return note('Use a password with at least 12 characters.');
     if (password !== $('sc').value) return note('Those passwords do not match.');
-    const bootstrapCode = $('sbc').value.trim();
-    if (!bootstrapCode) return note('Enter the bootstrap code to create the owner account.');
     $('sb').disabled = true; $('sb').innerHTML = 'Creating vault…';
     try {
       const response = await fetch(FUNCTION_URL + '/bootstrap', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password, confirmPassword: $('sc').value, bootstrapCode })
+        body: JSON.stringify({ username, password })
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || 'Could not create the owner account.');
