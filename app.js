@@ -225,12 +225,30 @@
     document.querySelectorAll('[data-view]').forEach(item => item.classList.toggle('active', item === button));
     view = button.dataset.view; renderFiles();
   }));
-  $('logout').addEventListener('click', async () => {
-    await db.auth.signOut(); user = null; profile = null; files = [];
-    $('app').classList.add('hidden'); $('auth').classList.remove('hidden');
-    try { const status = await getSetupStatus(); setAuthMode(!status.claimed); } catch (_) { setAuthMode(false); }
-    toast('Signed out.');
-  });
+  async function signOutOfVault() {
+    const buttons = [$('logout'), $('logoutTop')].filter(Boolean);
+    buttons.forEach(button => { button.disabled = true; button.setAttribute('aria-busy', 'true'); });
+    try {
+      const { error } = await db.auth.signOut({ scope: 'local' });
+      if (error) throw error;
+      user = null; profile = null; files = [];
+      $('app').classList.add('hidden');
+      $('auth').classList.remove('hidden');
+      try {
+        const status = await getSetupStatus();
+        setAuthMode(!status.claimed);
+      } catch (_) {
+        setAuthMode(false);
+      }
+      toast('You have been securely signed out.');
+    } catch (error) {
+      toast('Could not sign out: ' + (error.message || 'Please try again.'), true);
+    } finally {
+      buttons.forEach(button => { button.disabled = false; button.removeAttribute('aria-busy'); });
+    }
+  }
+  $('logout').addEventListener('click', signOutOfVault);
+  $('logoutTop').addEventListener('click', signOutOfVault);
   db.auth.onAuthStateChange((event) => {
     if (event === 'SIGNED_OUT' && user) {
       user = null; profile = null; files = [];
