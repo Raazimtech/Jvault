@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d100d">
+  <meta name="description" content="JVault — a private, secure place for your documents.">
+  <title>JVault — Your private space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
+  <main id="auth" class="auth-shell">
+    <section class="auth-visual">
+      <div class="brand"><span class="brand-mark">J<span>·</span></span><span>JVault</span></div>
+      <div class="visual-copy"><div class="eyebrow"><span class="pulse"></span> YOUR SPACE. YOUR CONTROL.</div><h1>Private by<br>design.</h1><p>A quieter, safer place for the files that matter to you.</p></div>
+      <div class="visual-bottom"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core">J<span>·</span></div><span>PERSONAL STORAGE, REIMAGINED</span></div>
+      <div class="visual-foot">PRIVATE STORAGE <span>·</span> BUILT FOR YOU</div>
+    </section>
+    <section class="auth-panel">
+      <div class="mobile-brand brand"><span class="brand-mark">J<span>·</span></span><span>JVault</span></div>
+      <div class="auth-card">
+        <div class="eyebrow muted-eyebrow">WELCOME TO YOUR VAULT</div>
+        <div id="authhead"><h2>Welcome back</h2><p>Sign in to access your private documents.</p></div>
+        <form id="setup" class="hidden" autocomplete="off">
+          <label for="su">Choose a username</label><input id="su" name="username" minlength="3" maxlength="24" pattern="[a-zA-Z0-9_]{3,24}" placeholder="e.g. karim_vault" required>
+          <label for="sp">Create a strong password</label><input id="sp" name="password" type="password" minlength="12" autocomplete="new-password" placeholder="At least 12 characters" required>
+          <label for="sc">Confirm password</label><input id="sc" name="confirm" type="password" minlength="12" autocomplete="new-password" placeholder="Enter it again" required>
+          <button id="sb" class="primary-btn" type="submit">Create vault owner <span>↗</span></button>
+          <p class="form-note">One owner account. Choose a password you won't lose.</p>
+        </form>
+        <form id="login" autocomplete="on">
+          <label for="lu">Username</label><input id="lu" name="username" autocomplete="username" placeholder="Your username" required>
+          <label for="lp">Password</label><input id="lp" name="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+          <button id="lb" class="primary-btn" type="submit">Unlock vault <span>↗</span></button>
+          <p class="form-note">Your files stay in your private storage. Keep your password safe.</p>
+        </form>
+        <div class="auth-security"><span class="lock-icon">⌑</span><span>Private storage <i>·</i> Encrypted in transit</span></div>
+      </div>
+      <div class="auth-footer">JVAULT <span>©</span> <span id="year"></span><span class="footer-dot">·</span> YOUR FILES, YOUR BUSINESS</div>
+    </section>
+  </main>
+  <main id="app" class="app-shell hidden">
+    <aside class="sidebar">
+      <a class="brand side-brand" href="#" aria-label="JVault home"><span class="brand-mark">J<span>·</span></span><span>JVault</span></a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <button class="nav-item active" data-view="all"><span class="nav-icon">▤</span> All documents <span class="nav-count" id="sf">0</span></button>
+        <button class="nav-item" data-view="recent"><span class="nav-icon">◷</span> Recent</button>
+        <button class="nav-item" data-view="categories"><span class="nav-icon">▦</span> Categories</button>
+      </nav>
+      <div class="storage-card"><div class="storage-heading"><span>Storage</span><span class="storage-symbol">↗</span></div><div class="storage-value" id="ss">0 B</div><div class="storage-sub">of 1 GB used</div><div class="progress-track"><div id="prog" class="progress-fill"></div></div><div id="usageText" class="storage-caption">0 B used</div></div>
+      <div class="sidebar-bottom"><div class="secure-badge"><span>✳</span><div><strong>Your vault is private</strong><small>Access is protected</small></div></div><button id="logout" class="logout-btn"><span>↪</span> Sign out</button></div>
+    </aside>
+    <section class="workspace">
+      <header class="topbar"><div class="crumb">Workspace <span>/</span> <strong>My vault</strong></div><div class="top-actions"><span class="today" id="today"></span><div class="avatar" id="avatar">J</div><div id="uname" class="user-name">Owner</div></div></header>
+      <div class="content">
+        <div class="welcome-row"><div><div class="eyebrow muted-eyebrow">YOUR PERSONAL SPACE</div><h1>Your documents<span class="title-period">.</span></h1><p class="subtitle">Everything important, organized in one private place.</p></div><button id="upload" class="primary-btn upload-main"><span class="upload-plus">＋</span> Upload files</button></div>
+        <div class="stats-grid"><article class="stat-card"><div class="stat-top"><span>Total documents</span><span class="stat-icon">▤</span></div><div class="stat-number" id="statDocs">0</div><div class="stat-foot">Stored in your vault</div></article><article class="stat-card"><div class="stat-top"><span>Space used</span><span class="stat-icon">◴</span></div><div class="stat-number" id="statSpace">0 B</div><div class="stat-foot">Across all documents</div></article><article class="stat-card"><div class="stat-top"><span>Categories</span><span class="stat-icon">▦</span></div><div class="stat-number" id="scat">0</div><div class="stat-foot">Keep things organized</div></article></div>
+        <section id="drop" class="dropzone"><div class="drop-icon">↑</div><div class="drop-copy"><strong>Drop files here to upload</strong><span>or browse from your device · Max 50 MB per file</span></div><button id="browse" class="secondary-btn">Browse files</button><input id="picker" type="file" multiple hidden></section>
+        <section class="documents-section"><div class="section-heading"><div><h2 id="filesTitle">Your documents</h2><p>Manage your private files and folders.</p></div><div class="toolbar"><div class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Search files..." aria-label="Search files"></div><select id="filter" aria-label="Filter category"><option value="">All categories</option></select><select id="sort" aria-label="Sort files"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="name">Name A–Z</option><option value="size">Largest first</option></select></div></div>
+          <div id="list" class="file-list"><div class="empty"><strong>Preparing your vault…</strong><p>Loading your private documents.</p></div></div>
+        </section>
+        <footer class="app-footer"><span>JVAULT <span>·</span> PRIVATE BY DESIGN</span><span>Your files belong to you.</span></footer>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>
