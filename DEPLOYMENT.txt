@@ -1,0 +1,30 @@
+JVault deployment
+================
+
+Repository: https://github.com/Raazimtech/jvault
+Live website: https://dpiwdhtbhwjgatvcfkcb.supabase.co/functions/v1/jvault
+Owner setup status: https://dpiwdhtbhwjgatvcfkcb.supabase.co/functions/v1/jvault/bootstrap-status
+Supabase project: https://supabase.com/dashboard/project/dpiwdhtbhwjgatvcfkcb
+
+Frontend files are plain HTML, CSS, and JavaScript:
+- index.html
+- style.css
+- app.js
+
+The deployed Supabase Edge Function serves index.html and loads the CSS/JavaScript from the public GitHub repository through jsDelivr. The same function implements the one-time owner setup endpoints. The database schema and private Storage bucket policies are in supabase/migrations/001_jvault.sql.
+
+First-time setup:
+1. Open the live website.
+2. If setup is still unclaimed, create the owner username and a strong password (12+ characters).
+3. Sign in using that username and password.
+4. There is no email-based password recovery because accounts use an internal non-deliverable email alias. Keep the password in a safe password manager.
+
+Storage:
+- Bucket: jvault-private (private)
+- Maximum file size: 50 MB
+- Database and Storage row-level security policies scope records and objects to the authenticated owner.
+
+Important security note:
+The one-time setup endpoint uses an atomic first-claim gate. Whoever reaches the unclaimed public setup endpoint first can claim the owner account. For a production launch, configure a private bootstrap secret or restrict initial setup at the edge, then remove/disable the bootstrap endpoint after the owner account has been created. Do not describe this as a guarantee of end-to-end encryption: files are private at rest in Supabase Storage and protected by access policies, but the app does not implement client-side zero-knowledge encryption.
+
+To deploy backend changes from this repository, deploy supabase/functions/jvault/index.ts as the Supabase Edge Function named jvault with JWT verification disabled for its public status/bootstrap routes. Keep the Supabase service-role key only in the Edge Function environment; never add it to the frontend or repository.
