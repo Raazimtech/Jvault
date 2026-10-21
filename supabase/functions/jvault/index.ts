@@ -9,7 +9,7 @@ async function serveSite(): Promise<Response> {
   const response = await fetch(SOURCE + "index.html", { headers: { "Cache-Control": "no-cache" } });
   if (!response.ok) return new Response("JVault frontend could not be loaded from its repository.", { status: 503 });
   let html = await response.text();
-  html = html.replace('href="./style.css"', 'href="https://cdn.jsdelivr.net/gh/Raazimtech/jvault@f6ae619cf9d3fa0eab0f67e29879eb93259dc9f8/style.css"').replace('src="./app.js"', 'src="https://cdn.jsdelivr.net/gh/Raazimtech/jvault@main/app.js?cb=jvault-logout-fix-20261021"');
+  html = html.replace('href="./style.css"', 'href="https://cdn.jsdelivr.net/gh/Raazimtech/jvault@d6f43718afc3c4aba01d164e13de91d5ceeee3ef/style.css"').replace('src="./app.js"', 'src="https://cdn.jsdelivr.net/gh/Raazimtech/jvault@main/app.js?cb=jvault-logout-fix-20261021"');
   return new Response(html, { headers: {
     "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "strict-origin-when-cross-origin", "X-Frame-Options": "DENY",
     "Content-Security-Policy": "default-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://dpiwdhtbhwjgatvcfkcb.supabase.co; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://dpiwdhtbhwjgatvcfkcb.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
